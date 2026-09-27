@@ -1,0 +1,45 @@
+.local-html-view .view-content,
+.workspace-leaf-content[data-type="local-html-view"] .view-content {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.local-html-view-bar {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 4px 8px;
+  border-bottom: 1px solid var(--background-modifier-border);
+  background: var(--background-secondary);
+  flex: 0 0 auto;
+}
+
+.local-html-view-spacer {
+  flex: 1 1 auto;
+}
+
+.local-html-view-mode {
+  font-size: 11px;
+  color: var(--text-faint);
+  margin-right: 6px;
+  font-family: var(--font-monospace);
+}
+
+.local-html-view-frame {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+}
+
+.local-html-view-frame webview,
+.local-html-view-frame iframe {
+  flex: 1 1 auto;
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: var(--background-primary);
+}

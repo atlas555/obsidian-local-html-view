@@ -1,0 +1,10 @@
+{
+	"id": "local-html-view",
+	"name": "Local HTML View",
+	"version": "1.0.0",
+	"minAppVersion": "1.4.0",
+	"description": "Open local HTML files in a full browser view, keeping scripts, styles and interactivity intact instead of stripping them.",
+	"author": "Allen Zhang",
+	"authorUrl": "https://github.com/atlas555",
+	"isDesktopOnly": true
+}

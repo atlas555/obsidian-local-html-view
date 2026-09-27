@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Interactive report</title>
+<style>
+  :root { color-scheme: dark; }
+  body {
+    margin: 0; padding: 32px 40px;
+    background: #1e1e1e; color: #dcddde;
+    font: 15px/1.6 -apple-system, "Helvetica Neue", sans-serif;
+  }
+  h1 { font-size: 26px; margin: 0 0 4px; font-weight: 600; }
+  p.sub { margin: 0 0 28px; color: #888; font-size: 13px; }
+  .row { display: flex; gap: 28px; align-items: flex-start; flex-wrap: wrap; }
+  .panel {
+    background: #262626; border: 1px solid #383838;
+    border-radius: 10px; padding: 20px 22px; flex: 1 1 300px;
+  }
+  h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .07em;
+       color: #9aa0a6; margin: 0 0 14px; font-weight: 600; }
+  canvas { display: block; }
+  button {
+    background: #7c5cff; color: #fff; border: 0; border-radius: 6px;
+    padding: 7px 15px; font-size: 13px; cursor: pointer; margin-right: 8px;
+  }
+  button.ghost { background: #363636; color: #dcddde; }
+  #count { font-size: 40px; font-weight: 600; color: #7c5cff; margin: 10px 0 14px; }
+  .note { color: #6f7378; font-size: 12px; margin-top: 10px; }
+  a { color: #7c5cff; }
+</style>
+</head>
+<body>
+  <h1>Interactive report</h1>
+  <p class="sub">A page whose content is produced entirely by JavaScript.</p>
+  <div class="row">
+    <div class="panel">
+      <h2>Canvas chart</h2>
+      <canvas id="chart" width="440" height="200"></canvas>
+      <p class="note">Drawn at runtime with the Canvas API.</p>
+    </div>
+    <div class="panel">
+      <h2>Event handlers</h2>
+      <div id="count">0</div>
+      <button id="inc">Increment</button>
+      <button id="reset" class="ghost">Reset</button>
+      <p class="note">Click handlers respond, state persists.</p>
+    </div>
+    <div class="panel">
+      <h2>Generated list</h2>
+      <ul id="list"></ul>
+      <p class="note">Built from a script, not present in the markup.</p>
+    </div>
+  </div>
+<script>
+  const ctx = document.getElementById('chart').getContext('2d');
+  const pts = [];
+  for (let i = 0; i < 60; i++) {
+    pts.push(100 + Math.sin(i / 6) * 55 + Math.sin(i / 2.1) * 14);
+  }
+  ctx.strokeStyle = '#383838';
+  for (let g = 1; g < 4; g++) {
+    ctx.beginPath();
+    ctx.moveTo(0, g * 50);
+    ctx.lineTo(440, g * 50);
+    ctx.stroke();
+  }
+  const grad = ctx.createLinearGradient(0, 0, 0, 200);
+  grad.addColorStop(0, 'rgba(124,92,255,.45)');
+  grad.addColorStop(1, 'rgba(124,92,255,0)');
+  ctx.beginPath();
+  pts.forEach((v, i) => {
+    const x = (i / (pts.length - 1)) * 440;
+    i === 0 ? ctx.moveTo(x, v) : ctx.lineTo(x, v);
+  });
+  ctx.lineTo(440, 200); ctx.lineTo(0, 200); ctx.closePath();
+  ctx.fillStyle = grad; ctx.fill();
+  ctx.beginPath();
+  pts.forEach((v, i) => {
+    const x = (i / (pts.length - 1)) * 440;
+    i === 0 ? ctx.moveTo(x, v) : ctx.lineTo(x, v);
+  });
+  ctx.strokeStyle = '#7c5cff'; ctx.lineWidth = 2; ctx.stroke();
+
+  let n = 0;
+  const out = document.getElementById('count');
+  document.getElementById('inc').onclick = () => { out.textContent = ++n; };
+  document.getElementById('reset').onclick = () => { n = 0; out.textContent = 0; };
+
+  const list = document.getElementById('list');
+  ['Scripts execute', 'Stylesheets apply', 'Canvas draws', 'Links stay clickable']
+    .forEach(t => {
+      const li = document.createElement('li');
+      li.textContent = t;
+      list.appendChild(li);
+    });
+</script>
+</body>
+</html>

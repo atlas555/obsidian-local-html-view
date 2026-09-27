@@ -12,6 +12,13 @@ or dead page.
 This plugin renders the file the way a browser would. Scripts run, stylesheets apply,
 `<canvas>` draws, and click handlers respond.
 
+![A script-generated page rendered inside an Obsidian tab](screenshots/interactive-page.png)
+
+The page above is `demo/interactive-report.html` from this repository. Nothing in it
+exists in the markup: the chart is drawn with the Canvas API, the counter is wired to
+click handlers, and the list is built by a script. Copy it into a vault to check the
+plugin on your own setup.
+
 ## Usage
 
 Click any `.html` or `.htm` file in the file explorer. It opens in a normal Obsidian

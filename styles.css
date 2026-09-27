@@ -43,3 +43,16 @@
   border: none;
   background: var(--background-primary);
 }
+
+/*
+ * A webview scales through Electron's own zoom factor. An iframe has no such
+ * hook, so it is scaled with a transform and its box is enlarged by the
+ * inverse factor to keep the visible area filled.
+ */
+.local-html-view-frame iframe {
+  --local-html-view-zoom: 1;
+  transform: scale(var(--local-html-view-zoom));
+  transform-origin: top left;
+  width: calc(100% / var(--local-html-view-zoom));
+  height: calc(100% / var(--local-html-view-zoom));
+}

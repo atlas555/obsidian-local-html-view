@@ -133,7 +133,6 @@ class LocalHtmlView extends obsidian.FileView {
       // otherwise the webview falls back to the default session.
       webview.partition = 'persist:vault-' + this.app.appId;
       host.appendChild(webview);
-      webview.setAttribute('allowpopups', '');
       this.registerDomEvent(webview, 'dom-ready', () => this.applyZoom());
       this.registerDomEvent(webview, 'will-navigate', (event) => this.interceptNav(event));
       this.registerDomEvent(webview, 'new-window', (event) => this.interceptNav(event));
@@ -173,10 +172,9 @@ class LocalHtmlView extends obsidian.FileView {
         // The renderer process is not ready yet; dom-ready will apply it.
       }
     } else {
-      this.frame.style.transform = 'scale(' + this.zoom + ')';
-      this.frame.style.transformOrigin = 'top left';
-      this.frame.style.width = 100 / this.zoom + '%';
-      this.frame.style.height = 100 / this.zoom + '%';
+      // The zoom factor is handed to CSS as a custom property so the actual
+      // rules stay in styles.css and remain overridable by themes.
+      this.frame.style.setProperty('--local-html-view-zoom', String(this.zoom));
     }
   }
 
